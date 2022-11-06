@@ -14,7 +14,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       - run: npm run build
-      - run: mv dist report
+      - run: mv ./dist report
+      - run: ls -la
       - name: Archive Release
         uses: thedoctor0/zip-release@main
         with:
