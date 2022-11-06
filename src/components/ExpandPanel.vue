@@ -47,17 +47,17 @@
               class="missing missing-status-code"
               :data-index="i"
             >
-              <v-list-item-avatar class="icon bug" start>
-                <v-icon icon="mdi-bug"></v-icon>
-              </v-list-item-avatar>
-              <v-list-item-header>
+              <template v-slot:prepend>
+                <v-icon class="icon" icon="mdi-bug"></v-icon>
+              </template>
+              <v-list-item-content>
                 <v-list-item-title class="text-body-1"
                   >HTTP status {{ missedStatusCode.code }}
                 </v-list-item-title>
                 <v-list-item-subtitle class="status-code-description">{{
                   missedStatusCode.description
                 }}</v-list-item-subtitle>
-              </v-list-item-header>
+              </v-list-item-content>
             </v-list-item>
             <div
               v-for="(coveredStatusCode, i) in item.responses.covered"
@@ -69,17 +69,17 @@
                 :value="coveredStatusCode.code"
                 class="covered covered-status-code"
               >
-                <v-list-item-avatar class="icon" start>
-                  <v-icon icon="mdi-check"></v-icon>
-                </v-list-item-avatar>
-                <v-list-item-header>
+                <template v-slot:prepend>
+                  <v-icon class="icon" icon="mdi-check"></v-icon>
+                </template>
+                <v-list-item-content>
                   <v-list-item-title class="text-body-1"
                     >HTTP status {{ coveredStatusCode.code }}</v-list-item-title
                   >
                   <v-list-item-subtitle class="status-code-description">{{
                     coveredStatusCode.description
                   }}</v-list-item-subtitle>
-                </v-list-item-header>
+                </v-list-item-content>
               </v-list-item>
               <v-list-item
                 lines="two"
@@ -88,9 +88,12 @@
                 :value="coveredStatusCode.code"
                 class="non-declared non-declared-status-code"
               >
-                <v-list-item-avatar class="icon" start>
-                  <v-icon icon="mdi-alert-circle-check-outline"></v-icon>
-                </v-list-item-avatar>
+                <template v-slot:prepend>
+                  <v-icon
+                    class="icon"
+                    icon="mdi-alert-circle-check-outline"
+                  ></v-icon>
+                </template>
                 <v-list-item-header>
                   <v-list-item-title class="text-body-1"
                     >HTTP status {{ coveredStatusCode.code }}</v-list-item-title
@@ -106,7 +109,7 @@
 
           <v-list
             density="compact"
-            class="status-code-list"
+            class="parameters-list"
             v-if="
               item.parameters.missed.length > 0 ||
               item.parameters.covered.length > 0
@@ -119,9 +122,9 @@
               :value="missedParameter"
               class="missing missing-parameter"
             >
-              <v-list-item-avatar class="bug icon" start>
-                <v-icon icon="mdi-bug"></v-icon>
-              </v-list-item-avatar>
+              <template v-slot:prepend>
+                <v-icon class="icon" icon="mdi-bug"></v-icon>
+              </template>
               <v-list-item-header>
                 <v-list-item-title class="text-body-1"
                   >In {{ missedParameter.in }} parameter {
@@ -138,32 +141,28 @@
               :value="coveredParameter"
               class="parameter covered-parameter"
             >
-              <v-expansion-panels multiple>
+              <v-expansion-panels class="covered-parameter-panel" multiple>
                 <v-expansion-panel>
                   <v-expansion-panel-title
                     expand-icon="mdi-menu-down"
                     class="covered covered-parameter-title"
                   >
-                    <div
-                      class="v-list-item v-list-item--link v-list-item--density-compact v-list-item--two-line v-list-item--variant-text"
-                    >
-                      <div
-                        class="v-avatar v-avatar--start v-avatar--density-default v-avatar--size-default v-list-item-avatar v-list-item-avatar--start icon"
-                      >
-                        <v-icon icon="mdi-check"></v-icon>
-                      </div>
-                      <div class="v-list-item-header parameter-title-container">
-                        <div class="v-list-item-title text-body-1">
-                          In {{ coveredParameter.in }} parameter {
-                          {{ coveredParameter.name }} }
-                        </div>
-                        <div class="v-list-item-subtitle">
-                          {{ coveredParameter.description }}
-                        </div>
-                      </div>
-                    </div>
+                    <v-list-item>
+                      <template v-slot:prepend>
+                        <v-icon class="icon" icon="mdi-check"></v-icon>
+                      </template>
+                      <v-list-item-header>
+                        <v-list-item-title class="text-body-1"
+                          >In {{ coveredParameter.in }} parameter {
+                          {{ coveredParameter.name }} }</v-list-item-title
+                        >
+                        <v-list-item-subtitle>{{
+                          coveredParameter.description
+                        }}</v-list-item-subtitle>
+                      </v-list-item-header>
+                    </v-list-item>
                   </v-expansion-panel-title>
-                  <v-expansion-panel-text>
+                  <v-expansion-panel-text class="covered-parameter-text">
                     <div v-if="coveredParameter.in != 'body'">
                       <div
                         v-for="param in coveredParameter.covered"
@@ -267,6 +266,7 @@ export default {
 
 .covered-parameter {
   padding-bottom: 2px !important;
+  color: white;
 }
 
 .covered-parameter-title {
@@ -292,7 +292,7 @@ export default {
 }
 
 .icon {
-  margin: 0px;
+  opacity: 100;
 }
 
 .expand-icon {
@@ -336,9 +336,7 @@ div.status-code-list .v-list-item {
   padding-bottom: 5px;
   margin-top: 10px;
 }
-</style>
 
-<style>
 .v-list-item:hover > .v-list-item__overlay {
   display: none;
 }
@@ -366,5 +364,20 @@ div.status-code-list .v-list-item {
 
 .deprecated_path .item-path-name {
   text-decoration: line-through;
+}
+
+.covered-parameter-panel {
+  padding-bottom: 15px;
+}
+
+.covered-parameter-text {
+  border-left: 0.1px solid #d3d3d3 !important;
+  border-right: 0.1px solid #d3d3d3 !important;
+}
+</style>
+
+<style>
+span.bg-warning {
+  color: white !important;
 }
 </style>
