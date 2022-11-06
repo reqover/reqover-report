@@ -1,0 +1,26 @@
+name: Publish Package to npmjs
+on:
+  release:
+    types: [created]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm ci
+      - run: npm run build
+      - name: Archive Release
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: 'report.zip'
+          path: dist
+      - name: Upload Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "report.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
