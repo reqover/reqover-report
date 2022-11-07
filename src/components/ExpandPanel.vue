@@ -50,14 +50,12 @@
               <template v-slot:prepend>
                 <v-icon class="icon" icon="mdi-bug"></v-icon>
               </template>
-              <v-list-item-content>
-                <v-list-item-title class="text-body-1"
-                  >HTTP status {{ missedStatusCode.code }}
-                </v-list-item-title>
-                <v-list-item-subtitle class="status-code-description">{{
-                  missedStatusCode.description
-                }}</v-list-item-subtitle>
-              </v-list-item-content>
+              <v-list-item-title class="text-body-1"
+                >HTTP status {{ missedStatusCode.code }}
+              </v-list-item-title>
+              <v-list-item-subtitle class="status-code-description">{{
+                missedStatusCode.description
+              }}</v-list-item-subtitle>
             </v-list-item>
             <div
               v-for="(coveredStatusCode, i) in item.responses.covered"
@@ -72,14 +70,13 @@
                 <template v-slot:prepend>
                   <v-icon class="icon" icon="mdi-check"></v-icon>
                 </template>
-                <v-list-item-content>
-                  <v-list-item-title class="text-body-1"
-                    >HTTP status {{ coveredStatusCode.code }}</v-list-item-title
-                  >
-                  <v-list-item-subtitle class="status-code-description">{{
-                    coveredStatusCode.description
-                  }}</v-list-item-subtitle>
-                </v-list-item-content>
+
+                <v-list-item-title class="text-body-1"
+                  >HTTP status {{ coveredStatusCode.code }}</v-list-item-title
+                >
+                <v-list-item-subtitle class="status-code-description">{{
+                  coveredStatusCode.description
+                }}</v-list-item-subtitle>
               </v-list-item>
               <v-list-item
                 lines="two"
@@ -94,15 +91,14 @@
                     icon="mdi-alert-circle-check-outline"
                   ></v-icon>
                 </template>
-                <v-list-item-header>
-                  <v-list-item-title class="text-body-1"
-                    >HTTP status {{ coveredStatusCode.code }}</v-list-item-title
-                  >
-                  <v-list-item-subtitle
-                    >This status code is not declared in swagger
-                    specification</v-list-item-subtitle
-                  >
-                </v-list-item-header>
+
+                <v-list-item-title class="text-body-1"
+                  >HTTP status {{ coveredStatusCode.code }}</v-list-item-title
+                >
+                <v-list-item-subtitle
+                  >This status code is not declared in swagger
+                  specification</v-list-item-subtitle
+                >
               </v-list-item>
             </div>
           </v-list>
@@ -125,15 +121,14 @@
               <template v-slot:prepend>
                 <v-icon class="icon" icon="mdi-bug"></v-icon>
               </template>
-              <v-list-item-header>
-                <v-list-item-title class="text-body-1"
-                  >In {{ missedParameter.in }} parameter {
-                  {{ missedParameter.name }} }</v-list-item-title
-                >
-                <v-list-item-subtitle>{{
-                  missedParameter.description
-                }}</v-list-item-subtitle>
-              </v-list-item-header>
+
+              <v-list-item-title class="text-body-1"
+                >In {{ missedParameter.in }} parameter {
+                {{ missedParameter.name }} }</v-list-item-title
+              >
+              <v-list-item-subtitle>{{
+                missedParameter.description
+              }}</v-list-item-subtitle>
             </v-list-item>
             <v-list-item
               v-for="(coveredParameter, i) in item.parameters.covered"
@@ -151,15 +146,14 @@
                       <template v-slot:prepend>
                         <v-icon class="icon" icon="mdi-check"></v-icon>
                       </template>
-                      <v-list-item-header>
-                        <v-list-item-title class="text-body-1"
-                          >In {{ coveredParameter.in }} parameter {
-                          {{ coveredParameter.name }} }</v-list-item-title
-                        >
-                        <v-list-item-subtitle>{{
-                          coveredParameter.description
-                        }}</v-list-item-subtitle>
-                      </v-list-item-header>
+
+                      <v-list-item-title class="text-body-1"
+                        >In {{ coveredParameter.in }} parameter {
+                        {{ coveredParameter.name }} }</v-list-item-title
+                      >
+                      <v-list-item-subtitle>{{
+                        coveredParameter.description
+                      }}</v-list-item-subtitle>
                     </v-list-item>
                   </v-expansion-panel-title>
                   <v-expansion-panel-text class="covered-parameter-text">
